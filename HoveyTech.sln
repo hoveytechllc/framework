@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{23A590FE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoveyTech.Core", "src\HoveyTech.Core\HoveyTech.Core.csproj", "{0FA77BB5-E5B1-4356-9074-B4EB34C51F42}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoveyTech.Data.EfCore", "src\HoveyTech.Data.EfCore\HoveyTech.Data.EfCore.csproj", "{2A5C757A-02F8-45DF-9CAB-20BD1546E315}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,11 +21,16 @@ Global
 		{0FA77BB5-E5B1-4356-9074-B4EB34C51F42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FA77BB5-E5B1-4356-9074-B4EB34C51F42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FA77BB5-E5B1-4356-9074-B4EB34C51F42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A5C757A-02F8-45DF-9CAB-20BD1546E315}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A5C757A-02F8-45DF-9CAB-20BD1546E315}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A5C757A-02F8-45DF-9CAB-20BD1546E315}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A5C757A-02F8-45DF-9CAB-20BD1546E315}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0FA77BB5-E5B1-4356-9074-B4EB34C51F42} = {39211E7C-8F84-443A-B2C3-9BA23759C72D}
+		{2A5C757A-02F8-45DF-9CAB-20BD1546E315} = {39211E7C-8F84-443A-B2C3-9BA23759C72D}
 	EndGlobalSection
 EndGlobal

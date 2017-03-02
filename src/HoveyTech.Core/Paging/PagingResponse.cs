@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using HoveyTech.Core.Model;
 
 namespace HoveyTech.Core.Paging
 {
