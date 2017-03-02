@@ -39,6 +39,7 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseTransaction.cs" />
     <Compile Include="Contracts\Data\Base\IHasTransaction.cs" />
     <Compile Include="Contracts\Data\Base\IPagingRepository.cs" />
     <Compile Include="Contracts\Data\Base\IRepository.cs" />

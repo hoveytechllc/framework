@@ -44,7 +44,6 @@
     <Compile Include="IDbContextFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
-    <Compile Include="Services\BaseService.cs" />
     <Compile Include="Transaction.cs" />
   </ItemGroup>
   <ItemGroup>

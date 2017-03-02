@@ -105,37 +105,5 @@ namespace HoveyTech.Data.EfCore
             Context.Dispose();
             Context = null;
         }
-
-        public static ITransaction GetTransaction(params IHasTransaction[] contextBasedMembers)
-        {
-            return GetTransaction(null, contextBasedMembers);
-        }
-
-        public static ITransaction GetTransaction(IsolationLevel? level,
-            params IHasTransaction[] contextBasedMembers)
-        {
-            Transaction tran = null;
-
-            foreach (var contextBasedMember in contextBasedMembers)
-            {
-                if (tran == null)
-                {
-                    tran = (Transaction)contextBasedMember.GetTransaction();
-                }
-
-                contextBasedMember.JoinTransaction(tran);
-            }
-
-            return tran;
-        }
-
-        public static void JoinTransaction(ITransaction tran,
-            params IHasTransaction[] contextBasedMembers)
-        {
-            foreach (var repository in contextBasedMembers)
-            {
-                repository.JoinTransaction(tran);
-            }
-        }
     }
 }
