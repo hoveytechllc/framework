@@ -1,4 +1,4 @@
-﻿namespace HoveyTech.Core.Model
+﻿namespace HoveyTech.Core
 {
     public sealed class EmptyObject
     {

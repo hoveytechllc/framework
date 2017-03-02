@@ -47,7 +47,7 @@
     <Compile Include="Model\BaseEntityWithGuidKey.cs" />
     <Compile Include="Model\BaseEntityWithIntKey.cs" />
     <Compile Include="Model\BaseLookupEntity.cs" />
-    <Compile Include="Model\EmptyObject.cs" />
+    <Compile Include="EmptyObject.cs" />
     <Compile Include="Contracts\Model\IGetIdentifier.cs" />
     <Compile Include="Contracts\Model\IIdentifierGenerator.cs" />
     <Compile Include="Contracts\Model\IIsActive.cs" />
