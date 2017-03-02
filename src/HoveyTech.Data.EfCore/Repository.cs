@@ -22,12 +22,12 @@ namespace HoveyTech.Data.EfCore
             _dbContextFactory = dbContextFactory;
         }
 
-        public ITransaction CreateContext(IsolationLevel level = IsolationLevel.ReadCommitted)
+        public virtual ITransaction CreateContext(IsolationLevel level = IsolationLevel.ReadCommitted)
         {
             return new Transaction(_dbContextFactory.Get(), level);
         }
 
-        public bool HasOpenContext
+        public virtual bool HasOpenContext
         {
             get
             {
@@ -35,9 +35,8 @@ namespace HoveyTech.Data.EfCore
                 {
                     var tran = (Transaction) CurrentTransaction;
                     return tran != null
-                     && tran.IsOpen
-                     && tran.Context != null
-                     && tran.Context.Database.CurrentTransaction != null;
+                           && tran.IsOpen 
+                           && tran.Context?.Database.CurrentTransaction != null;
                 }
                 catch (InvalidOperationException ex)
                 {
@@ -77,43 +76,22 @@ namespace HoveyTech.Data.EfCore
 
         public virtual TEntity GetById(object id)
         {
-            using (var tran = GetTransactionInternal())
-            {
-                var entity = tran.GetSet<TEntity>().Find(id);
-
-                tran.CommitIfOwner();
-
-                return entity;
-            }
+            return ExecuteWithTransaction(tran => tran.GetSet<TEntity>().Find(id));
         }
 
         public virtual IList<TEntity> GetAll()
         {
-            using (var tran = GetTransactionInternal())
-            {
-                var list = tran.GetSet<TEntity>().ToList();
-
-                tran.CommitIfOwner();
-
-                return list;
-            }
+            return ExecuteWithTransaction(tran => tran.GetSet<TEntity>().ToList());
         }
 
         public virtual IList<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            using (var tran = GetTransactionInternal())
-            {
-                var list = tran.GetSet<TEntity>().Where(predicate).ToList();
-
-                tran.CommitIfOwner();
-
-                return list;
-            }
+            return ExecuteWithTransaction(tran => tran.GetSet<TEntity>().Where(predicate).ToList());
         }
 
         public virtual IPagedList<TEntity> FindWithPaging<TKey>(IPagingRequest pagingRequest, Expression<Func<TEntity, TKey>> orderBy, Expression<Func<TEntity, bool>> predicate = null)
         {
-            using (var tran = GetTransactionInternal())
+            return ExecuteWithTransaction(tran =>
             {
                 IQueryable<TEntity> list = tran.GetSet<TEntity>();
 
@@ -122,65 +100,55 @@ namespace HoveyTech.Data.EfCore
 
                 list = list.OrderBy(orderBy);
 
-                var pagedList = list.ToPagedList(pagingRequest);
-
-                tran.CommitIfOwner();
-
-                return pagedList;
-            }
+                return list.ToPagedList(pagingRequest);
+            });
         }
 
         public virtual TEntity Add(TEntity entity)
         {
-            using (var tran = GetTransactionInternal())
-            {
-                (entity as IIdentifierGenerator)?.CreateIdentifier();
-
-                tran.GetSet<TEntity>().Add(entity);
-
-                tran.CommitIfOwner();
-
-                return entity;
-            }
+            (entity as IIdentifierGenerator)?.CreateIdentifier();
+            ExecuteWithTransaction(tran => tran.GetSet<TEntity>().Add(entity));
+            return entity;
         }
 
         public virtual TEntity Update(TEntity entity)
         {
-            using (var tran = GetTransactionInternal())
-            {
-                tran.GetSet<TEntity>().Update(entity);
-
-                tran.CommitIfOwner();
-
-                return entity;
-            }
+            ExecuteWithTransaction(tran => tran.GetSet<TEntity>().Update(entity));
+            return entity;
         }
 
         public virtual void Delete(TEntity entity)
         {
-            using (var tran = GetTransactionInternal())
-            {
-                tran.GetSet<TEntity>().Remove(entity);
-
-                tran.CommitIfOwner();
-            }
+            ExecuteWithTransaction(tran => tran.GetSet<TEntity>().Remove(entity));
         }
 
-        public void UpdateRange(IEnumerable<TEntity> entities)
+        public virtual void UpdateRange(IEnumerable<TEntity> entities)
+        {
+            ExecuteWithTransaction(tran => tran.GetSet<TEntity>().UpdateRange(entities));
+        }
+
+        public virtual void AddRange(IEnumerable<TEntity> entities)
+        {
+            ExecuteWithTransaction(tran => tran.GetSet<TEntity>().AddRange(entities));
+        }
+
+        protected virtual TResult ExecuteWithTransaction<TResult>(Func<Transaction, TResult> func)
         {
             using (var tran = GetTransactionInternal())
             {
-                tran.GetSet<TEntity>().UpdateRange(entities);
+                var result = func(tran);
 
                 tran.CommitIfOwner();
+
+                return result;
             }
         }
 
-        public void AddRange(IEnumerable<TEntity> entities)
+        protected virtual void ExecuteWithTransaction(Action<Transaction> action)
         {
             using (var tran = GetTransactionInternal())
             {
-                tran.GetSet<TEntity>().AddRange(entities);
+                action(tran);
 
                 tran.CommitIfOwner();
             }
