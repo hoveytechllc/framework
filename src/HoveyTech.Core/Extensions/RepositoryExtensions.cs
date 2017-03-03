@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using HoveyTech.Core.Contracts.Data.Base;
+using HoveyTech.Core.Contracts.Data;
 using HoveyTech.Core.Contracts.Model;
 using HoveyTech.Core.Model;
 
-namespace HoveyTech.Data.EfCore.Extensions
+namespace HoveyTech.Core.Extensions
 {
     public static class RepositoryExtensions
     {

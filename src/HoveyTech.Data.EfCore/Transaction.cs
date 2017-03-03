@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data;
-using HoveyTech.Core.Contracts.Data.Base;
+using HoveyTech.Core.Contracts.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace HoveyTech.Data.EfCore

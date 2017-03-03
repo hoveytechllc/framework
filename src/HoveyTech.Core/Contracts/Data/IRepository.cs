@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HoveyTech.Core.Contracts.Data.Base
+namespace HoveyTech.Core.Contracts.Data
 {
     public interface IRepository<TEntity> : IRepository<TEntity, ITransaction>
         where TEntity : class

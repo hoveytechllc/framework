@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using HoveyTech.Core.Paging;
 
-namespace HoveyTech.Core.Contracts.Data.Base
+namespace HoveyTech.Core.Contracts.Data
 {
     public interface IPagingRepository<TEntity> : IPagingRepository<TEntity, IQueryableTransaction>
         where TEntity : class

@@ -1,4 +1,4 @@
-﻿namespace HoveyTech.Core.Contracts.Data.Base
+﻿namespace HoveyTech.Core.Contracts.Data
 {
     /// <summary>
     /// Used by RepositoryBase. Repository that is specific to a DbContext

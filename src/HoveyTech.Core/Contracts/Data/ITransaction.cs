@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace HoveyTech.Core.Contracts.Data.Base
+namespace HoveyTech.Core.Contracts.Data
 {
     public interface ITransaction : IDisposable
     {

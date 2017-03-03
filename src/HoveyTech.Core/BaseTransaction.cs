@@ -1,4 +1,4 @@
-﻿using HoveyTech.Core.Contracts.Data.Base;
+﻿using HoveyTech.Core.Contracts.Data;
 
 namespace HoveyTech.Core
 {

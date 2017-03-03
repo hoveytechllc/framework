@@ -1,4 +1,4 @@
-﻿namespace HoveyTech.Core.Contracts.Data.Base
+﻿namespace HoveyTech.Core.Contracts.Data
 {
     public interface IService : IHasTransaction
     {

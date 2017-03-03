@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
-using HoveyTech.Core.Contracts.Data.Base;
+using HoveyTech.Core.Contracts.Data;
 using HoveyTech.Core.Contracts.Model;
+using HoveyTech.Core.Extensions;
 using HoveyTech.Core.Paging;
-using HoveyTech.Data.EfCore.Extensions;
 
 namespace HoveyTech.Data.EfCore
 {
