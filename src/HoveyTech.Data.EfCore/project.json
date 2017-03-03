@@ -1,11 +1,13 @@
 ﻿{
-  "supports": {},
+  "version": "1.0.0-*",
+
   "dependencies": {
-    "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
     "NETStandard.Library": "1.6.1",
-    "Microsoft.EntityFrameworkCore.Relational": "1.1.0"
+    "Microsoft.EntityFrameworkCore.Relational": "1.1.0",
+    "HoveyTech.Core": "1.0.0-*"
   },
+
   "frameworks": {
-    "netstandard1.3": {}
+    "netstandard1.3": { }
   }
 }

@@ -1,29 +1,12 @@
 ﻿{
-  "version": "0.1.0-*",
-  "description": "Framework core models and interfaces",
-  "title": "Framework core models and interfaces",
-  "authors": [ "Hovey Tech LLC", "David Hovey" ],
-
-  "packOptions": {
-    "owners": [ "Hovey Tech LLC", "David Hovey" ],
-    "projectUrl": "https://github.com/hoveytech/framework"
-  },
-
-  "supports": {},
+  "version": "1.0.0-*",
 
   "dependencies": {
-    "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
-    "NETStandard.Library": "1.6.1",
+    "NETStandard.Library": "1.6.0",
     "System.Linq.Queryable": "4.3.0"
   },
 
   "frameworks": {
-    "netstandard1.0": {}
-  },
-
-  "scripts": {
-    "postcompile": [
-      "dotnet pack --no-build --configuration %compile:Configuration%"
-    ]
+    "netstandard1.1": { }
   }
 }
