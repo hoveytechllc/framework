@@ -1,6 +1,14 @@
 ﻿{
   "version": "0.1.0-*",
 
+  "authors": [ "Hovey Tech LLC", "David Hovey" ],
+  "packOptions": {
+    "owners": [ "Hovey Tech LLC", "David Hovey" ],
+    "projectUrl": "https://github.com/hoveytech/framework"
+  },
+  "description": "Framework data code for using EF Core",
+  "title": "HoveyTech.Data.EfCore",
+
   "dependencies": {
     "NETStandard.Library": "1.6.1",
     "Microsoft.EntityFrameworkCore.Relational": "1.1.0",
@@ -8,6 +16,12 @@
   },
 
   "frameworks": {
-    "netstandard1.3": { }
+    "netstandard1.3": {}
+  },
+
+  "scripts": {
+    "postcompile": [
+      "dotnet pack --no-build --configuration %compile:Configuration%"
+    ]
   }
 }

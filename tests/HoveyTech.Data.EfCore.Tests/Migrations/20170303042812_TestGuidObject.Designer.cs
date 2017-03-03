@@ -8,9 +8,10 @@ using HoveyTech.Data.EfCore.Tests.TestContext;
 namespace HoveyTech.Data.EfCore.Tests.Migrations
 {
     [DbContext(typeof(TestDbContext))]
-    partial class TestDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170303042812_TestGuidObject")]
+    partial class TestGuidObject
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752");

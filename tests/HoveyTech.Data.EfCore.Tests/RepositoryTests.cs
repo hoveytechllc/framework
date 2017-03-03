@@ -11,10 +11,14 @@ namespace HoveyTech.Data.EfCore.Tests
     public class RepositoryTests
     {
         private readonly IPagingRepository<TestObject, IQueryableTransaction> _sut;
+        private readonly IPagingRepository<TestGuidObject, IQueryableTransaction> _testGuidObjectRepository;
 
         public RepositoryTests()
         {
-            _sut = new Repository<TestObject>(new TestDbContextFactory());
+            var dbContextFactory = new TestDbContextFactory();
+            _testGuidObjectRepository = new Repository<TestGuidObject>(dbContextFactory);
+
+            _sut = new Repository<TestObject>(dbContextFactory);
         }
 
         [Fact]
@@ -27,6 +31,25 @@ namespace HoveyTech.Data.EfCore.Tests
             });
 
             Assert.NotEqual(0, result.Id);
+        }
+
+        [Fact]
+        public void Add_does_respect_guid_foreign_key()
+        {
+            var testGuidObject = _testGuidObjectRepository.Add(new TestGuidObject()
+            {
+                Text = "Hello"
+            });
+
+            var result = _sut.Add(new TestObject()
+            {
+                Text = "Add_does_set_id_property",
+                CreatedOn = DateTimeOffset.UtcNow,
+                TestGuidObjectId = testGuidObject.Id
+            });
+
+            Assert.NotEqual(0, result.Id);
+            Assert.Equal(result.TestGuidObjectId, testGuidObject.Id);
         }
     }
 }

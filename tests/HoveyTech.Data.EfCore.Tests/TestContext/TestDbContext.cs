@@ -8,19 +8,26 @@ namespace HoveyTech.Data.EfCore.Tests.TestContext
 {
     public class TestDbContextFactory : IDbContextFactory
     {
-        public static bool Migrated;
+        public string FilePath;
 
         public DbContext Get()
         {
-            var context = new TestDbContext();
+            TestDbContext context;
 
             lock (this)
             {
-                if (!Migrated)
+                bool migrate = false;
+
+                if (FilePath == null)
                 {
-                    context.Database.Migrate();
-                    Migrated = true;
+                    FilePath = TestDbLocationProvider.GetTestFilePath();
+                    migrate = true;
                 }
+
+                context = new TestDbContext(FilePath);
+
+                if (migrate)
+                    context.Database.Migrate();
             }
 
             return context;
@@ -29,14 +36,24 @@ namespace HoveyTech.Data.EfCore.Tests.TestContext
 
     public class TestDbContext : DbContext
     {
+        private readonly string _filePath;
+
+        public TestDbContext(string filePath)
+        {
+            _filePath = filePath;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite($"Filename={TestDbLocationProvider.GetTestFilePath()}");
+            optionsBuilder.UseSqlite($"Filename={_filePath}");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<TestObject>();
+            modelBuilder.Entity<TestObject>().HasOne(x => x.TestGuidObject).
+                WithMany(x => x.TestObjects).
+                HasForeignKey(x => x.TestGuidObjectId);
+            modelBuilder.Entity<TestGuidObject>();
         }
     }
 }
