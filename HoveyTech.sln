@@ -20,6 +20,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HoveyTech.Tests.Console", "tests\HoveyTech.Tests.Console\HoveyTech.Tests.Console.xproj", "{E66B73F0-3AC2-4545-BED0-8898FD19F7BC}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HoveyTech.Autofac", "src\HoveyTech.Autofac\HoveyTech.Autofac.xproj", "{216C2A5C-C348-4E67-9FEA-59DB5CC5FC1D}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HoveyTech.Data.EfCore.Autofac", "src\HoveyTech.Data.EfCore.Autofac\HoveyTech.Data.EfCore.Autofac.xproj", "{04561D61-A592-4C22-846F-E8E7FFB046A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +46,14 @@ Global
 		{E66B73F0-3AC2-4545-BED0-8898FD19F7BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E66B73F0-3AC2-4545-BED0-8898FD19F7BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E66B73F0-3AC2-4545-BED0-8898FD19F7BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{216C2A5C-C348-4E67-9FEA-59DB5CC5FC1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{216C2A5C-C348-4E67-9FEA-59DB5CC5FC1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{216C2A5C-C348-4E67-9FEA-59DB5CC5FC1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{216C2A5C-C348-4E67-9FEA-59DB5CC5FC1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04561D61-A592-4C22-846F-E8E7FFB046A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04561D61-A592-4C22-846F-E8E7FFB046A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04561D61-A592-4C22-846F-E8E7FFB046A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04561D61-A592-4C22-846F-E8E7FFB046A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,5 +63,7 @@ Global
 		{8E6296EE-97B8-4537-A50B-D542B5F3272A} = {39211E7C-8F84-443A-B2C3-9BA23759C72D}
 		{207414D6-3296-4A84-BA9E-52294C473B26} = {23A590FE-2AF2-4499-A54A-34B94473CBC1}
 		{E66B73F0-3AC2-4545-BED0-8898FD19F7BC} = {23A590FE-2AF2-4499-A54A-34B94473CBC1}
+		{216C2A5C-C348-4E67-9FEA-59DB5CC5FC1D} = {39211E7C-8F84-443A-B2C3-9BA23759C72D}
+		{04561D61-A592-4C22-846F-E8E7FFB046A5} = {39211E7C-8F84-443A-B2C3-9BA23759C72D}
 	EndGlobalSection
 EndGlobal
