@@ -83,17 +83,7 @@ namespace HoveyTech.Data.EfCore
             Context.Database.CurrentTransaction.Commit();
             CloseConnection();
         }
-
-        public DbSet<TEntity> GetSet<TEntity>() where TEntity : class
-        {
-            return Context.Set<TEntity>();
-        }
-
-        public DbSet<TEntity> GetSet<TEntity, TKey>() where TEntity : class
-        {
-            return Context.Set<TEntity>();
-        }
-
+        
         public void Dispose()
         {
             Rollback();

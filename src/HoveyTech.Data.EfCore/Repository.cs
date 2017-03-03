@@ -10,24 +10,24 @@ using HoveyTech.Data.EfCore.Extensions;
 
 namespace HoveyTech.Data.EfCore
 {
-    public class Repository<TEntity> : IPagingRepository<TEntity>
+    public class Repository<TEntity> : IPagingRepository<TEntity, IQueryableTransaction>
       where TEntity : class
     {
         private readonly IDbContextFactory _dbContextFactory;
 
-        public ITransaction CurrentTransaction { get; private set; }
+        public IQueryableTransaction CurrentTransaction { get; private set; }
         
         public Repository(IDbContextFactory dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
         }
 
-        public virtual ITransaction CreateContext(IsolationLevel level = IsolationLevel.ReadCommitted)
+        public virtual IQueryableTransaction CreateTransaction(IsolationLevel level = IsolationLevel.ReadCommitted)
         {
-            return new Transaction(_dbContextFactory.Get(), level);
+            return new QueryableTransaction(_dbContextFactory.Get(), level);
         }
 
-        public virtual bool HasOpenContext
+        public virtual bool HasOpenTransaction
         {
             get
             {
@@ -47,31 +47,31 @@ namespace HoveyTech.Data.EfCore
             }
         }
 
-        protected virtual Transaction GetTransactionInternal(IsolationLevel? level = null)
+        protected virtual QueryableTransaction GetTransactionInternal(IsolationLevel? level = null)
         {
-            return (Transaction)GetTransactionWithIsolationLevel(level);
+            return (QueryableTransaction)GetTransactionWithIsolationLevel(level);
         }
 
-        public virtual ITransaction GetTransaction()
+        public virtual IQueryableTransaction GetTransaction()
         {
             return GetTransactionWithIsolationLevel();
         }
 
-        public virtual ITransaction GetTransactionWithIsolationLevel(IsolationLevel? level = null)
+        public virtual IQueryableTransaction GetTransactionWithIsolationLevel(IsolationLevel? level = null)
         {
-            if (HasOpenContext)
+            if (HasOpenTransaction)
             {
-                return new Transaction((Transaction)CurrentTransaction);
+                return new QueryableTransaction((Transaction)CurrentTransaction);
             }
 
-            CurrentTransaction = new Transaction(_dbContextFactory.Get(), level);
+            CurrentTransaction = new QueryableTransaction(_dbContextFactory.Get(), level);
 
             return CurrentTransaction;
         }
 
-        public virtual void JoinTransaction(ITransaction tran)
+        public virtual void JoinTransaction(IQueryableTransaction tran)
         {
-            CurrentTransaction = new Transaction((Transaction)tran);
+            CurrentTransaction = new QueryableTransaction((Transaction)tran);
         }
 
         public virtual TEntity GetById(object id)
@@ -132,7 +132,7 @@ namespace HoveyTech.Data.EfCore
             ExecuteWithTransaction(tran => tran.GetSet<TEntity>().AddRange(entities));
         }
 
-        protected virtual TResult ExecuteWithTransaction<TResult>(Func<Transaction, TResult> func)
+        protected virtual TResult ExecuteWithTransaction<TResult>(Func<QueryableTransaction, TResult> func)
         {
             using (var tran = GetTransactionInternal())
             {
@@ -144,7 +144,7 @@ namespace HoveyTech.Data.EfCore
             }
         }
 
-        protected virtual void ExecuteWithTransaction(Action<Transaction> action)
+        protected virtual void ExecuteWithTransaction(Action<QueryableTransaction> action)
         {
             using (var tran = GetTransactionInternal())
             {

@@ -45,6 +45,8 @@
     <Compile Include="Contracts\Data\Base\IRepository.cs" />
     <Compile Include="Contracts\Data\Base\IService.cs" />
     <Compile Include="Contracts\Data\Base\ITransaction.cs" />
+    <Compile Include="Extensions\QueryableExtensions.cs" />
+    <Compile Include="Extensions\RepositoryExtensions.cs" />
     <Compile Include="Model\BaseEntityWithGuidKey.cs" />
     <Compile Include="Model\BaseEntityWithIntKey.cs" />
     <Compile Include="Model\BaseLookupEntity.cs" />
@@ -64,6 +66,10 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
