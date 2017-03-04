@@ -1,9 +1,8 @@
 ﻿using System;
+using HoveyTech.Data.EfCore.Tests.TestContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
-using HoveyTech.Data.EfCore.Tests.TestContext;
 
 namespace HoveyTech.Data.EfCore.Tests.Migrations
 {

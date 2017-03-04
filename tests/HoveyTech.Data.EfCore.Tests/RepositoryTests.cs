@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using HoveyTech.Core.Contracts.Data;
 using HoveyTech.Data.EfCore.Tests.TestContext;
 using Xunit;

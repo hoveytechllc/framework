@@ -1,6 +1,5 @@
 ﻿using System.Data;
 using System.Linq;
-using HoveyTech.Core.Contracts.Data;
 using HoveyTech.Core.EfCore;
 using Microsoft.EntityFrameworkCore;
 
