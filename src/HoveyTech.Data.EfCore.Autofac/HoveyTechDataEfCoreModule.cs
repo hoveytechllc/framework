@@ -7,7 +7,7 @@ namespace HoveyTech.Data.EfCore.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<,>));
+            builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>));
         }
     }
 }

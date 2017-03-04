@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
-using HoveyTech.Core.Contracts.Data;
 using HoveyTech.Core.Contracts.Model;
-using HoveyTech.Core.Extensions;
+using HoveyTech.Core.EfCore;
+using HoveyTech.Core.EfCore.Extensions;
 using HoveyTech.Core.Paging;
 
 namespace HoveyTech.Data.EfCore
 {
-    public class Repository<TEntity> : IPagingRepository<TEntity, IQueryableTransaction>
-      where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity>
+        where TEntity : class
     {
         private readonly IDbContextFactory _dbContextFactory;
 
         public IQueryableTransaction CurrentTransaction { get; private set; }
-        
+
         public Repository(IDbContextFactory dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
@@ -33,9 +33,9 @@ namespace HoveyTech.Data.EfCore
             {
                 try
                 {
-                    var tran = (Transaction) CurrentTransaction;
+                    var tran = CurrentTransaction as QueryableTransaction;
                     return tran != null
-                           && tran.IsOpen 
+                           && tran.IsOpen
                            && tran.Context?.Database.CurrentTransaction != null;
                 }
                 catch (InvalidOperationException ex)
@@ -49,7 +49,7 @@ namespace HoveyTech.Data.EfCore
 
         protected virtual QueryableTransaction GetTransactionInternal(IsolationLevel? level = null)
         {
-            return (QueryableTransaction)GetTransactionWithIsolationLevel(level);
+            return GetTransactionWithIsolationLevel(level) as QueryableTransaction;
         }
 
         public virtual IQueryableTransaction GetTransaction()
@@ -61,7 +61,7 @@ namespace HoveyTech.Data.EfCore
         {
             if (HasOpenTransaction)
             {
-                return new QueryableTransaction((Transaction)CurrentTransaction);
+                return new QueryableTransaction(CurrentTransaction as QueryableTransaction);
             }
 
             CurrentTransaction = new QueryableTransaction(_dbContextFactory.Get(), level);
@@ -71,7 +71,7 @@ namespace HoveyTech.Data.EfCore
 
         public virtual void JoinTransaction(IQueryableTransaction tran)
         {
-            CurrentTransaction = new QueryableTransaction((Transaction)tran);
+            CurrentTransaction = new QueryableTransaction(tran as QueryableTransaction);
         }
 
         public virtual TEntity GetById(object id)

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using HoveyTech.Core.Paging;
 
-namespace HoveyTech.Core.Extensions
+namespace HoveyTech.Core.EfCore.Extensions
 {
     public static class QueryableExtensions
     {

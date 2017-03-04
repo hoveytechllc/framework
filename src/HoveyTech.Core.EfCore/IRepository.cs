@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using HoveyTech.Core.Contracts.Data;
 using HoveyTech.Core.Paging;
 
-namespace HoveyTech.Core.Contracts.Data
+namespace HoveyTech.Core.EfCore
 {
-    public interface IPagingRepository<TEntity> : IPagingRepository<TEntity, IQueryableTransaction>
+    public interface IRepository<TEntity> : Contracts.Data.IRepository<TEntity>, IHasTransaction<IQueryableTransaction>
         where TEntity : class
-    {
-        
-    }
-
-    public interface IPagingRepository<TEntity, TTransaction> : IRepository<TEntity, TTransaction>
-        where TEntity : class
-        where TTransaction : IQueryableTransaction
     {
         IList<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 

@@ -4,13 +4,12 @@ using HoveyTech.Core.Contracts.Data;
 using HoveyTech.Core.Contracts.Model;
 using HoveyTech.Core.Model;
 
-namespace HoveyTech.Core.Extensions
+namespace HoveyTech.Core.EfCore.Extensions
 {
     public static class RepositoryExtensions
     {
-        public static bool DoesEntityExistById<TEntity, TTransaction>(this IRepository<TEntity, TTransaction> repository, int id)
+        public static bool DoesEntityExistById<TEntity>(this IRepository<TEntity> repository, int id)
                 where TEntity : BaseEntityWithIntKey
-            where TTransaction : IQueryableTransaction
         {
             using (var tran = repository.GetTransaction())
             {
@@ -22,9 +21,8 @@ namespace HoveyTech.Core.Extensions
             }
         }
 
-        public static IList<TEntity> GetAllActiveSorted<TEntity, TTransaction>(this IRepository<TEntity, TTransaction> repository, int? optionalId = null)
-              where TEntity : BaseEntityWithIntKey, IIsActive, INamedEntity, new()
-            where TTransaction : IQueryableTransaction
+        public static IList<TEntity> GetAllActiveSorted<TEntity>(this IRepository<TEntity> repository, int? optionalId = null)
+              where TEntity : BaseEntityWithIntKey, IIsActive, INamedEntity
         {
             using (var tran = repository.GetTransaction())
             {
@@ -45,9 +43,8 @@ namespace HoveyTech.Core.Extensions
             }
         }
 
-        public static IList<TEntity> GetAllActive<TEntity, TTransaction>(this IRepository<TEntity, TTransaction> repository, int? optionalId = null)
-            where TEntity : BaseEntityWithIntKey, IIsActive, new()
-            where TTransaction : IQueryableTransaction
+        public static IList<TEntity> GetAllActive<TEntity>(this IRepository<TEntity> repository, int? optionalId = null)
+            where TEntity : BaseEntityWithIntKey, IIsActive
         {
             using (var tran = repository.GetTransaction())
             {

@@ -1,13 +1,14 @@
 ﻿using System.Data;
 using System.Linq;
 using HoveyTech.Core.Contracts.Data;
+using HoveyTech.Core.EfCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HoveyTech.Data.EfCore
 {
     public class QueryableTransaction : Transaction, IQueryableTransaction
     {
-        public QueryableTransaction(Transaction transaction) 
+        public QueryableTransaction(QueryableTransaction transaction) 
             : base(transaction)
         {
         }
@@ -17,12 +18,12 @@ namespace HoveyTech.Data.EfCore
         {
         }
         
-        public IQueryable<TEntity> GetQueryable<TEntity>() where TEntity : class
+        public virtual IQueryable<TEntity> GetQueryable<TEntity>() where TEntity : class
         {
             return GetSet<TEntity>();
         }
 
-        public DbSet<TEntity> GetSet<TEntity>() where TEntity : class
+        public virtual DbSet<TEntity> GetSet<TEntity>() where TEntity : class
         {
             return Context.Set<TEntity>();
         }

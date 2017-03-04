@@ -10,8 +10,8 @@ namespace HoveyTech.Data.EfCore.Tests
 {
     public class RepositoryTests
     {
-        private readonly IPagingRepository<TestObject, IQueryableTransaction> _sut;
-        private readonly IPagingRepository<TestGuidObject, IQueryableTransaction> _testGuidObjectRepository;
+        private readonly IRepository<TestObject> _sut;
+        private readonly IRepository<TestGuidObject> _testGuidObjectRepository;
 
         public RepositoryTests()
         {

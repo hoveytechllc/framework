@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace HoveyTech.Core.Contracts.Data
 {
@@ -12,10 +11,5 @@ namespace HoveyTech.Core.Contracts.Data
         void Rollback();
 
         bool IsOwner { get; }
-    }
-
-    public interface IQueryableTransaction : ITransaction
-    {
-        IQueryable<TEntity> GetQueryable<TEntity>() where TEntity : class;
     }
 }
