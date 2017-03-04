@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/hoveytech/framework</licenseUrl>
+    <projectUrl>https://github.com/hoveytech/framework</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Initial beta release.</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>framework core hoveytech repository</tags>
+  </metadata>
+</package>

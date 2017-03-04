@@ -1,15 +1,29 @@
 {
   "version": "1.0.0-*",
 
+  "authors": [ "Hovey Tech LLC", "David Hovey" ],
+  "packOptions": {
+    "owners": [ "Hovey Tech LLC", "David Hovey" ],
+    "projectUrl": "https://github.com/hoveytech/framework"
+  },
+  "description": "Framework core models and contracts",
+  "title": "HoveyTech.Data.EfCore.Autofac",
+
   "dependencies": {
     "HoveyTech.Core": "0.1.0-*",
     "HoveyTech.Data.EfCore": "0.1.0-*",
     "NETStandard.Library": "1.6.1",
-    "Autofac": "4.2.1" 
+    "Autofac": "4.2.1"
   },
 
   "frameworks": {
     "netstandard1.3": {
     }
+  },
+
+  "scripts": {
+    "postcompile": [
+      "dotnet pack --no-build --configuration %compile:Configuration%"
+    ]
   }
 }
