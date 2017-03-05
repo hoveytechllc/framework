@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3203C10D-CCAD-4FB4-A19C-B7DDBA809499}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
+		publish_nuget.sh = publish_nuget.sh
 	EndProjectSection
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HoveyTech.Tests.Console", "tests\HoveyTech.Tests.Console\HoveyTech.Tests.Console.xproj", "{E66B73F0-3AC2-4545-BED0-8898FD19F7BC}"

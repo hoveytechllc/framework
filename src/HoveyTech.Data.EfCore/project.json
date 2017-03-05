@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0-*",
+  "version": "0.1.1-*",
 
   "authors": [ "Hovey Tech LLC", "David Hovey" ],
   "packOptions": {
@@ -12,8 +12,8 @@
   "dependencies": {
     "NETStandard.Library": "1.6.1",
     "Microsoft.EntityFrameworkCore.Relational": "1.1.0",
-    "HoveyTech.Core.EfCore": "1.0.0-*",
-    "HoveyTech.Core": "0.1.0-*"
+    "HoveyTech.Core.EfCore": "0.1.1-*",
+    "HoveyTech.Core": "0.1.1-*"
   },
 
   "frameworks": {

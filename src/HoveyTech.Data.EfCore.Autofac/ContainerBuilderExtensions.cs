@@ -11,8 +11,7 @@ namespace HoveyTech.Data.EfCore.Autofac
         {
             builder.RegisterAssemblyTypes(assembly).
                 Where(x => 
-                    x.IsDerivedFromGeneric(typeof(IRepository<>))
-                    || x.IsDerivedFromGeneric(typeof(IRepository<,>))).
+                    x.IsDerivedFromGeneric(typeof(IRepository<>))).
                 AsImplementedInterfaces().
                 AsSelf();
         }

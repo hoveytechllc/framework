@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-*",
+  "version": "0.1.1-*",
 
   "authors": [ "Hovey Tech LLC", "David Hovey" ],
   "packOptions": {
@@ -10,8 +10,8 @@
   "title": "HoveyTech.Data.EfCore.Autofac",
 
   "dependencies": {
-    "HoveyTech.Core": "0.1.0-*",
-    "HoveyTech.Data.EfCore": "0.1.0-*",
+    "HoveyTech.Core": "0.1.1-*",
+    "HoveyTech.Data.EfCore": "0.1.1-*",
     "NETStandard.Library": "1.6.1",
     "Autofac": "4.2.1"
   },
