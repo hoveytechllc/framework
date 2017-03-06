@@ -8,7 +8,7 @@ namespace HoveyTech.Core.EfCore.Extensions
     public static class RepositoryExtensions
     {
         public static bool DoesEntityExistById<TEntity>(this IRepository<TEntity> repository, int id)
-                where TEntity : BaseEntityWithIntKey
+                where TEntity : class, IEntityWithIntKey
         {
             using (var tran = repository.GetTransaction())
             {
@@ -21,7 +21,7 @@ namespace HoveyTech.Core.EfCore.Extensions
         }
 
         public static IList<TEntity> GetAllActiveSorted<TEntity>(this IRepository<TEntity> repository, int? optionalId = null)
-              where TEntity : BaseEntityWithIntKey, IIsActive, INamedEntity
+              where TEntity : class, IEntityWithIntKey, IIsActive, INamedEntity
         {
             using (var tran = repository.GetTransaction())
             {
@@ -43,7 +43,7 @@ namespace HoveyTech.Core.EfCore.Extensions
         }
 
         public static IList<TEntity> GetAllActive<TEntity>(this IRepository<TEntity> repository, int? optionalId = null)
-            where TEntity : BaseEntityWithIntKey, IIsActive
+            where TEntity : class, IEntityWithIntKey, IIsActive
         {
             using (var tran = repository.GetTransaction())
             {

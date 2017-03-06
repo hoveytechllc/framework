@@ -6,7 +6,7 @@ using HoveyTech.Core.Paging;
 
 namespace HoveyTech.Core.EfCore
 {
-    public interface IRepository<TEntity> : Contracts.Data.IRepository<TEntity>, IHasTransaction<IQueryableTransaction>
+    public interface IRepository<TEntity> : Contracts.Data.IRepository<TEntity>, IHasQueryableTransaction
         where TEntity : class
     {
         IList<TEntity> Find(Expression<Func<TEntity, bool>> predicate);

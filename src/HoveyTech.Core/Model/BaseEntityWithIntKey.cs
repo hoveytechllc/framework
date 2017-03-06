@@ -2,7 +2,7 @@
 
 namespace HoveyTech.Core.Model
 {
-    public class BaseEntityWithIntKey : IStateAware, IGetIdentifier
+    public class BaseEntityWithIntKey : IStateAware, IGetIdentifier, IEntityWithIntKey
     {
         public virtual int Id { get; set; }
 

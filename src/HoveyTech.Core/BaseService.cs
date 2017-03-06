@@ -2,10 +2,11 @@
 
 namespace HoveyTech.Core
 {
-    public abstract class BaseService<TTransaction> : IService<TTransaction>
+    public abstract class BaseService<THasTransaction, TTransaction> : IService<TTransaction>
         where TTransaction : class, ITransaction
+        where THasTransaction : IHasTransaction<TTransaction>
     {
-        protected abstract IHasTransaction<TTransaction>[] ContextBasedMembers { get; }
+        protected abstract THasTransaction[] ContextBasedMembers { get; }
 
         public void JoinTransaction(TTransaction tran)
         {
@@ -17,7 +18,7 @@ namespace HoveyTech.Core
             return GetTransaction(ContextBasedMembers);
         }
 
-        public static TTransaction GetTransaction(params IHasTransaction<TTransaction>[] contextBasedMembers)
+        public static TTransaction GetTransaction(params THasTransaction[] contextBasedMembers)
         {
             TTransaction tran = null;
 
@@ -33,7 +34,7 @@ namespace HoveyTech.Core
         }
 
         public static void JoinTransaction(TTransaction tran,
-            params IHasTransaction<TTransaction>[] contextBasedMembers)
+            params THasTransaction[] contextBasedMembers)
         {
             foreach (var repository in contextBasedMembers)
             {
