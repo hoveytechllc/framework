@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Framework core models and contracts</Description>
+    <AssemblyTitle>HoveyTech.Core</AssemblyTitle>
+    <VersionPrefix>0.1.3</VersionPrefix>
+    <Authors>Hovey Tech LLC;David Hovey</Authors>
+    <TargetFramework>netstandard1.1</TargetFramework>
+    <AssemblyName>HoveyTech.Core</AssemblyName>
+    <PackageId>HoveyTech.Core</PackageId>
+    <PackageProjectUrl>https://github.com/hoveytech/framework</PackageProjectUrl>
+    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Linq.Queryable" Version="4.3.0" />
+  </ItemGroup>
+
+  <Target Name="PostcompileScript" AfterTargets="Build">
+    <Exec Command="dotnet pack --no-build --configuration $(Configuration)" />
+  </Target>
+
+</Project>

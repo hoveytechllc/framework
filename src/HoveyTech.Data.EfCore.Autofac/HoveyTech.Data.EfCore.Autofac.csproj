@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Framework core models and contracts</Description>
+    <AssemblyTitle>HoveyTech.Data.EfCore.Autofac</AssemblyTitle>
+    <VersionPrefix>0.1.3</VersionPrefix>
+    <Authors>Hovey Tech LLC;David Hovey</Authors>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <AssemblyName>HoveyTech.Data.EfCore.Autofac</AssemblyName>
+    <PackageId>HoveyTech.Data.EfCore.Autofac</PackageId>
+    <PackageProjectUrl>https://github.com/hoveytech/framework</PackageProjectUrl>
+    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HoveyTech.Core\HoveyTech.Core.csproj" />
+    <ProjectReference Include="..\HoveyTech.Data.EfCore\HoveyTech.Data.EfCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.4.0" />
+  </ItemGroup>
+
+  <Target Name="PostcompileScript" AfterTargets="Build">
+    <Exec Command="dotnet pack --no-build --configuration $(Configuration)" />
+  </Target>
+
+</Project>
