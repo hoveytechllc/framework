@@ -9,9 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9197F56F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution", "solution", "{5AFB91DA-947F-42EF-BC8B-7D1277D0689B}"
 	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
 		NuGet.config = NuGet.config
 		publish_nuget.sh = publish_nuget.sh
+		readme.md = readme.md
+		VERSION = VERSION
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoveyTech.Autofac", "src\HoveyTech.Autofac\HoveyTech.Autofac.csproj", "{AA59B1E1-3B85-4555-8AEC-92F5B3C5C7E5}"

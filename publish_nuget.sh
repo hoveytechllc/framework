@@ -25,55 +25,26 @@ rm ./build/*.*
 #
 
 # setup variables
-versionFromGlobalJson=""
 testPattern="Tests"
 versionPattern="(([0-9]{1,3}\.)?([0-9]{1,3}\.)?([0-9]{1,3}\.)?([0-9]{1,3})(-\*)?)"
-regexPattern="\"version\": \"$versionPattern\""
+csprojVersionPattern="<VersionPrefix>$versionPattern<\/VersionPrefix>"
 
 echo "** Replacing project.json versions with value from global.json"
-globalJson=`cat global.json`
+globalVersion=`cat ./VERSION`
 
-if [[ $globalJson =~ $regexPattern ]]; then
-	versionFromGlobalJson=${BASH_REMATCH[1]}
-	replacementForProjectJson="\"version\": \"$versionFromGlobalJson\""
-	echo "Parsed version from global.json: $versionFromGlobalJson"
-	
-	for i in "${projects[@]}"
-	do
-		projectJsonFilePath=""
-		if [[ $i =~ $testPattern ]]; then
-			projectJsonFilePath="./tests/$i/project.json"
-		else
-			projectJsonFilePath="./src/$i/project.json"
-		fi
+replacementForCsProj="<VersionPrefix>$globalVersion<\/VersionPrefix>"
+echo "Using global version $globalVersion"
 
-		echo "Calculated project.json file: $projectJsonFilePath"
-
-		sed -i -r "0,/$regexPattern/ s/$regexPattern/$replacementForProjectJson/g" $projectJsonFilePath
-
-		for j in "${projects[@]}"
-		do
-			dependencyPattern="\"$j\": \"$versionPattern\""
-			replacementDependency="\"$j\": \"$versionFromGlobalJson\""
-			sed -i -r "s/$dependencyPattern/$replacementDependency/g" $projectJsonFilePath
-		done
-	done
-fi
-
-echo "*** Restore NUGET packages"
 for i in "${projects[@]}"
 do
-	projectJsonFilePath=""
+	csprojFilePath=""
 	if [[ $i =~ $testPattern ]]; then
-		projectJsonFilePath="./tests/$i/project.json"
+		csprojFilePath="./tests/$i/$i.csproj"
 	else
-		projectJsonFilePath="./src/$i/project.json"
+		csprojFilePath="./src/$i/$i.csproj"
 	fi
 
-	dotnet restore $projectJsonFilePath
-	if [ $? -ne 0 ]; then 
-		exit $?
-	fi
+	sed -i -r "s/$csprojVersionPattern/$replacementForCsProj/g" $csprojFilePath
 done
 
 echo "*** Running tests"
@@ -83,7 +54,7 @@ do
 		continue
 	fi
 
-	dotnet test ./tests/$i/project.json
+	dotnet test ./tests/$i/$i.csproj
 	if [ $? -ne 0 ]; then 
 		exit $?
 	fi
@@ -96,7 +67,7 @@ do
 		continue
 	fi
 
-	dotnet pack ./src/$i/project.json -c Release -o ./build
+	dotnet pack -c Release -o ./../../build ./src/$i/$i.csproj 
 	if [ $? -ne 0 ]; then 
 		exit $? 
 	fi
