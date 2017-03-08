@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Framework core models and contracts</Description>
     <AssemblyTitle>HoveyTech.Autofac</AssemblyTitle>
-    <VersionPrefix>0.1.3</VersionPrefix>
+    <VersionPrefix>0.1.4</VersionPrefix>
     <Authors>Hovey Tech LLC;David Hovey</Authors>
     <TargetFramework>netstandard1.1</TargetFramework>
     <AssemblyName>HoveyTech.Autofac</AssemblyName>
