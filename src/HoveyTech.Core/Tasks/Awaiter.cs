@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿#if NETSTANDARD1_1 || NET451
+using System;
 using System.Threading.Tasks;
 
 namespace HoveyTech.Core.Tasks
@@ -21,3 +20,4 @@ namespace HoveyTech.Core.Tasks
         }
     }
 }
+#endif

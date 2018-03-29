@@ -4,8 +4,8 @@ namespace HoveyTech.Core.Model
 {
     public class BaseLookupEntity : BaseEntityWithIntKey, IIsActive, INamedEntity
     {
-        public string Name { get; set; }
+        public virtual string Name { get; protected set; }
         
-        public bool IsActive { get; set; }
+        public virtual bool IsActive { get; protected set; }
     }
 }

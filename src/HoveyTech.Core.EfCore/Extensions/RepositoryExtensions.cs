@@ -7,26 +7,6 @@ namespace HoveyTech.Core.EfCore.Extensions
 {
     public static class RepositoryExtensions
     {
-        public static void InactivateEntitiesNotInList<TEntity>(this IRepository<TEntity> repository,
-            IList<TEntity> entities)
-            where TEntity : class, IEntityWithIntKey, IIsActive
-        {
-            using (var tran = repository.GetTransaction())
-            {
-                var entitiesToInactivate = tran.GetQueryable<TEntity>().
-                    Where(x => x.IsActive
-                        && entities.Any(e => e.Id != x.Id)).
-                    ToList();
-
-                foreach (var entity in entitiesToInactivate)
-                    entity.IsActive = false;
-
-                repository.UpdateRange(entitiesToInactivate);
-                
-                tran.CommitIfOwner();
-            }
-        }
-
         public static bool DoesEntityExistById<TEntity>(this IRepository<TEntity> repository, int id)
                 where TEntity : class, IEntityWithIntKey
         {

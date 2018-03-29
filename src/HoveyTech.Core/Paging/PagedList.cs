@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NET20
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,13 +7,13 @@ namespace HoveyTech.Core.Paging
 {
     public class PagedTypedList<TSource, TDestination> : List<TDestination>, IPagedList<TDestination>
     {
-        public int TotalCount { get; }
+        public int TotalCount { get; protected set; }
 
-        public int PageCount { get; }
+        public int PageCount { get; protected set; }
 
-        public int Page { get; }
+        public int Page { get; protected set; }
 
-        public int PageSize { get; }
+        public int PageSize { get; protected set; }
 
         public PagedTypedList(IPagedList<TSource> source, Func<TSource, TDestination> func)
         {
@@ -74,18 +75,20 @@ namespace HoveyTech.Core.Paging
     public class FilteredPagedList<T, TFilter> : PagedList<T>, IFilteredPagedList<T, TFilter>
         where TFilter : IPagingRequest
     {
-        public FilteredPagedList(TFilter filter, IPagedList pagingProperties, IList<T> list) 
+        public FilteredPagedList(TFilter filter, IPagedList pagingProperties, IList<T> list)
             : base(pagingProperties, list)
         {
             Filter = filter;
         }
 
-        public FilteredPagedList(TFilter filter, IQueryable<T> source) 
+        public FilteredPagedList(TFilter filter, IQueryable<T> source)
             : base(source, filter)
         {
             Filter = filter;
         }
-        
+
         public TFilter Filter { get; }
     }
 }
+
+#endif

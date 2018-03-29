@@ -1,7 +1,7 @@
 ﻿using System;
 using HoveyTech.Core.Contracts;
 
-namespace HoveyTech.Core
+namespace HoveyTech.Core.Services
 {
     public class DateTimeFactory : IDateTimeFactory
     {

@@ -1,4 +1,4 @@
-﻿namespace HoveyTech.Core
+﻿namespace HoveyTech.Core.Runtime
 {
     public sealed class EmptyObject
     {

@@ -1,6 +1,6 @@
 ﻿using HoveyTech.Core.Contracts.Data;
 
-namespace HoveyTech.Core
+namespace HoveyTech.Core.Services
 {
     public abstract class BaseService<THasTransaction, TTransaction> : IService<TTransaction>
         where TTransaction : class, ITransaction

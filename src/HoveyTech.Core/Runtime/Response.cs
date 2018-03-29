@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HoveyTech.Core
+namespace HoveyTech.Core.Runtime
 {
     public class Response
     {

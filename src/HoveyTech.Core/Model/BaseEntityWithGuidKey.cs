@@ -3,7 +3,7 @@ using HoveyTech.Core.Contracts.Model;
 
 namespace HoveyTech.Core.Model
 {
-    public class BaseEntityWithGuidKey : IIdentifierGenerator, IGetIdentifier, IEntityWithGuidKey
+    public class BaseEntityWithGuidKey : IIdentifierGenerator, IEntityWithGuidKey
     {
         public virtual Guid Id { get; set; }
 

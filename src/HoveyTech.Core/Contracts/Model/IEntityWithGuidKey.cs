@@ -2,7 +2,7 @@
 
 namespace HoveyTech.Core.Contracts.Model
 {
-    public interface IEntityWithGuidKey
+    public interface IEntityWithGuidKey : IGetIdentifier
     {
         Guid Id { get; set; }
     }

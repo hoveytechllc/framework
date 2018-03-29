@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using HoveyTech.Core;
 using HoveyTech.Core.Contracts.IoC;
+using HoveyTech.Core.Services;
 
 namespace HoveyTech.Autofac
 {

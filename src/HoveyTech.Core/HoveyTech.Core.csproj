@@ -5,23 +5,19 @@
     <AssemblyTitle>HoveyTech.Core</AssemblyTitle>
     <VersionPrefix>0.1.4</VersionPrefix>
     <Authors>Hovey Tech LLC;David Hovey</Authors>
-    <TargetFramework>netstandard1.1</TargetFramework>
+    <TargetFrameworks>netstandard1.1;net2.0;net3.5;net4.5.1</TargetFrameworks>
     <AssemblyName>HoveyTech.Core</AssemblyName>
     <PackageId>HoveyTech.Core</PackageId>
     <PackageProjectUrl>https://github.com/hoveytech/framework</PackageProjectUrl>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.1'">
     <PackageReference Include="System.Linq.Queryable" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
-
-  <Target Name="PostcompileScript" AfterTargets="Build">
-    <Exec Command="dotnet pack --no-build --configuration $(Configuration)" />
-  </Target>
 
 </Project>
