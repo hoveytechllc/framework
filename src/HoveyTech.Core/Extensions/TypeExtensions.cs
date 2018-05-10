@@ -7,7 +7,6 @@ namespace HoveyTech.Core.Extensions
     {
         public static bool IsDerivedFromGeneric(this Type toCheck, Type generic)
         {
-#if NETSTANDARD1_1
             foreach (var contract in toCheck.GetTypeInfo().ImplementedInterfaces)
             {
                 if (contract.IsConstructedGenericType)
@@ -19,10 +18,10 @@ namespace HoveyTech.Core.Extensions
                 }
             }
 
+            if (toCheck.GetTypeInfo().BaseType != null)
+                return IsDerivedFromGeneric(toCheck.GetTypeInfo().BaseType, generic);
+
             return false;
-#else
-            throw new NotImplementedException();
-#endif
         }
     }
 }

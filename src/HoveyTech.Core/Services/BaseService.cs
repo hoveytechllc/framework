@@ -2,7 +2,12 @@
 
 namespace HoveyTech.Core.Services
 {
-    public abstract class BaseService<THasTransaction, TTransaction> : IService<TTransaction>
+    public abstract class BaseDataService : BaseDataService<IHasTransaction, ITransaction>
+    {
+
+    }
+
+    public abstract class BaseDataService<THasTransaction, TTransaction> : IDataService<TTransaction>
         where TTransaction : class, ITransaction
         where THasTransaction : IHasTransaction<TTransaction>
     {

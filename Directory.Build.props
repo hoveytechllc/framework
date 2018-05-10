@@ -1,0 +1,17 @@
+<Project>
+  <PropertyGroup>
+    <VersionPrefix>0.2.0</VersionPrefix>
+    <Authors>David Hovey</Authors>
+    <Company>Hovey Tech LLC</Company>
+    <Product>Framework Libraries</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.1" />
+  </ItemGroup>
+
+</Project>
+
+
+
+

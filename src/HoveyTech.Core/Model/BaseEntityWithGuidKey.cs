@@ -3,9 +3,9 @@ using HoveyTech.Core.Contracts.Model;
 
 namespace HoveyTech.Core.Model
 {
-    public class BaseEntityWithGuidKey : IIdentifierGenerator, IEntityWithGuidKey
+    public class BaseEntityWithGuidKey : IEntityWithGuidKey
     {
-        public virtual Guid Id { get; set; }
+        public virtual Guid Id { get; protected set; }
 
         public virtual bool IsNew => Id == Guid.Empty;
 
@@ -15,7 +15,7 @@ namespace HoveyTech.Core.Model
             Id = Guid.NewGuid();
         }
 
-        public object GetIdentifier()
+        public virtual object GetIdentifier()
         {
             return Id;
         }

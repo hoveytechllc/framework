@@ -2,8 +2,8 @@
 
 namespace HoveyTech.Core.Contracts.Model
 {
-    public interface IEntityWithGuidKey : IGetIdentifier
+    public interface IEntityWithGuidKey : IEntity<Guid>, IIdentifierGenerator
     {
-        Guid Id { get; set; }
+
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace HoveyTech.Core.Contracts.Model
 {
-    public interface IEntityWithIntKey: IGetIdentifier
+    public interface IEntityWithIntKey: IEntity<int>
     {
-        int Id { get; set; }
+
     }
 }

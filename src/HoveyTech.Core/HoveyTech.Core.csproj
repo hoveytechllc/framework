@@ -1,23 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Framework core models and contracts</Description>
-    <AssemblyTitle>HoveyTech.Core</AssemblyTitle>
-    <VersionPrefix>0.1.4</VersionPrefix>
-    <Authors>Hovey Tech LLC;David Hovey</Authors>
-    <TargetFrameworks>netstandard1.1;net2.0;net3.5;net4.5.1</TargetFrameworks>
-    <AssemblyName>HoveyTech.Core</AssemblyName>
-    <PackageId>HoveyTech.Core</PackageId>
-    <PackageProjectUrl>https://github.com/hoveytech/framework</PackageProjectUrl>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <TargetFrameworks>netstandard1.3</TargetFrameworks>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.1'">
-    <PackageReference Include="System.Linq.Queryable" Version="4.3.0" />
-  </ItemGroup>
-
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <PackageReference Include="System.Linq.Queryable" Version="4.3.0" />
   </ItemGroup>
 
 </Project>
