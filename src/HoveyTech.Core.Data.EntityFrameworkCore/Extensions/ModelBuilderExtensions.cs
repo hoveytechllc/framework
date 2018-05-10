@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace HoveyTech.Core.Data.EntityFrameworkCore.Contracts
+namespace HoveyTech.Core.Data.EntityFrameworkCore.Extensions
 {
     public static class ModelBuilderExtensions
     {

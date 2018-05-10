@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using HoveyTech.Core.Json.Resolvers;
+using HoveyTech.Core.Model;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace HoveyTech.Core.Tests.Serialization
+namespace HoveyTech.Core.Json.Tests.Resolvers
 {
     public class SimplePropertiesContractResolverTests
     {

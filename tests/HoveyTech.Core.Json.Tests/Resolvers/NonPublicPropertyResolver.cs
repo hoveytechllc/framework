@@ -1,8 +1,9 @@
 ﻿using System;
+using HoveyTech.Core.Json.SerializerSettings;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace HoveyTech.Core.Tests.Serialization
+namespace HoveyTech.Core.Json.Tests.Resolvers
 {
     public class NonPublicPropertyResolverTests
     {
@@ -36,28 +37,28 @@ namespace HoveyTech.Core.Tests.Serialization
         [Fact]
         public void Serialize_does_set_camelCaseProperty_in_json_when_flag_true()
         {
-            var json = JsonConvert.SerializeObject(new PrivateSetter("Value1"), new AzdaJsonSerializerSettings(camelCaseResolver: true));
+            var json = JsonConvert.SerializeObject(new PrivateSetter("Value1"), new HoveyTechDefaultJsonSerializerSettings(camelCaseResolver: true));
             Assert.Contains("property1", json);
         }
 
         [Fact]
         public void Serialize_does_NOT_set_camelCaseProperty_in_json_when_flag_false()
         {
-            var json = JsonConvert.SerializeObject(new PrivateSetter("Value1"), new AzdaJsonSerializerSettings());
+            var json = JsonConvert.SerializeObject(new PrivateSetter("Value1"), new HoveyTechDefaultJsonSerializerSettings());
             Assert.Contains("Property1", json);
         }
 
         [Fact]
         public void Deserialize_does_set_camelCaseProperty_in_json()
         {
-            var read = JsonConvert.DeserializeObject<PrivateSetter>("{ \"property1\":\"Value1\"}", new AzdaJsonSerializerSettings());
+            var read = JsonConvert.DeserializeObject<PrivateSetter>("{ \"property1\":\"Value1\"}", new HoveyTechDefaultJsonSerializerSettings());
             Assert.Equal("Value1", read.Property1);
         }
 
         [Fact]
         public void Deserialize_does_use_default_private_constructor()
         {
-            var read = JsonConvert.DeserializeObject<PrivateSetter>("{}", new AzdaJsonSerializerSettings());
+            var read = JsonConvert.DeserializeObject<PrivateSetter>("{}", new HoveyTechDefaultJsonSerializerSettings());
             Assert.NotNull(read);
             Assert.Null(read.Property1);
             Assert.Null(read.Property2);
@@ -66,7 +67,7 @@ namespace HoveyTech.Core.Tests.Serialization
         [Fact]
         public void Deserialize_does_use_private_setter()
         {
-            var read = JsonConvert.DeserializeObject<PrivateSetter>("{ \"Property1\":\"Value1\", \"Property2\":\"Value2\" }", new AzdaJsonSerializerSettings());
+            var read = JsonConvert.DeserializeObject<PrivateSetter>("{ \"Property1\":\"Value1\", \"Property2\":\"Value2\" }", new HoveyTechDefaultJsonSerializerSettings());
             Assert.Equal("Value1", read.Property1);
             Assert.Equal("Value2", read.Property2);
         }
@@ -74,7 +75,7 @@ namespace HoveyTech.Core.Tests.Serialization
         [Fact]
         public void Deserialize_does_use_POCO_setter()
         {
-            var read = JsonConvert.DeserializeObject<PublicAllTheWay>("{ \"Property1\":\"Value1\" }", new AzdaJsonSerializerSettings());
+            var read = JsonConvert.DeserializeObject<PublicAllTheWay>("{ \"Property1\":\"Value1\" }", new HoveyTechDefaultJsonSerializerSettings());
             Assert.Equal("Value1", read.Property1);
         }
     }
