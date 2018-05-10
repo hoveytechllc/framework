@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using HoveyTech.Core.Caching.Options;
 using HoveyTech.Core.Contracts.Caching;
 using Microsoft.Extensions.Caching.Memory;
+
+[assembly: InternalsVisibleTo("HoveyTech.Core.Caching.Tests")]
 
 namespace HoveyTech.Core.Caching.Services
 {
