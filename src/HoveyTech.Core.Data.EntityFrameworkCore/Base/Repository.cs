@@ -10,31 +10,31 @@ using HoveyTech.Core.Paging;
 
 namespace HoveyTech.Core.Data.EntityFrameworkCore.Base
 {
-    public class Repository<TEntity> : Repository<TEntity, IDbContextFactory>
+    public class EntityFrameworkCoreRepository<TEntity> : EntityFrameworkCoreRepository<TEntity, IDbContextFactory>
         where TEntity : class
     {
-        public Repository(IDbContextFactory dbContextFactory) 
+        public EntityFrameworkCoreRepository(IDbContextFactory dbContextFactory) 
             : base(dbContextFactory)
         {
         }
     }
 
-    public class Repository<TEntity, TDbContextFactory> : IPagingDbContextRepository<TEntity, TDbContextFactory>
+    public class EntityFrameworkCoreRepository<TEntity, TDbContextFactory> : IPagingDbContextRepository<TEntity, TDbContextFactory>
         where TEntity : class
         where TDbContextFactory : IDbContextFactory
     {
         private readonly TDbContextFactory _dbContextFactory;
 
-        public ITransaction CurrentTransaction { get; private set; }
+        public IEntityFrameworkCoreTransaction CurrentTransaction { get; private set; }
         
-        public Repository(TDbContextFactory dbContextFactory)
+        public EntityFrameworkCoreRepository(TDbContextFactory dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
         }
 
-        public ITransaction CreateContext(IsolationLevel level = IsolationLevel.ReadCommitted)
+        public IEntityFrameworkCoreTransaction CreateContext(IsolationLevel level = IsolationLevel.ReadCommitted)
         {
-            return new Transaction(_dbContextFactory.Get(), level);
+            return new EntityFrameworkCoreTransaction(_dbContextFactory.Get(), level);
         }
 
         public bool HasOpenContext
@@ -43,8 +43,7 @@ namespace HoveyTech.Core.Data.EntityFrameworkCore.Base
             {
                 try
                 {
-                    var tran = (Transaction) CurrentTransaction;
-                    return tran != null && tran.IsOpen;
+                    return CurrentTransaction?.IsOpen ?? false;
                 }
                 catch (InvalidOperationException ex)
                 {
@@ -55,38 +54,38 @@ namespace HoveyTech.Core.Data.EntityFrameworkCore.Base
             }
         }
 
-        protected virtual Transaction GetTransactionInternal(IsolationLevel? level = null)
+        protected virtual IEntityFrameworkCoreTransaction GetTransactionInternal(IsolationLevel? level = null)
         {
-            return (Transaction)GetTransactionWithIsolationLevel(level);
+            return GetTransactionWithIsolationLevel(level);
         }
 
-        public virtual ITransaction GetTransaction()
+        public virtual IEntityFrameworkCoreTransaction GetTransaction()
         {
             return GetTransactionWithIsolationLevel();
         }
 
-        public virtual ITransaction GetTransactionWithIsolationLevel(IsolationLevel? level = null)
+        public virtual IEntityFrameworkCoreTransaction GetTransactionWithIsolationLevel(IsolationLevel? level = null)
         {
             if (HasOpenContext)
             {
-                return new Transaction((Transaction)CurrentTransaction);
+                return new EntityFrameworkCoreTransaction(CurrentTransaction);
             }
 
-            CurrentTransaction = new Transaction(_dbContextFactory.Get(), level);
+            CurrentTransaction = CreateContext(level ?? IsolationLevel.ReadCommitted);
 
             return CurrentTransaction;
         }
 
-        public virtual void JoinTransaction(ITransaction tran)
+        public virtual void JoinTransaction(IEntityFrameworkCoreTransaction tran)
         {
-            CurrentTransaction = new Transaction((Transaction)tran);
+            CurrentTransaction = new EntityFrameworkCoreTransaction(tran);
         }
 
         public virtual TEntity GetById(object id)
         {
             using (var tran = GetTransactionInternal())
             {
-                var entity = tran.GetSet<TEntity>().Find(id);
+                var entity = tran.Set<TEntity>().Find(id);
 
                 tran.CommitIfOwner();
 
@@ -98,7 +97,7 @@ namespace HoveyTech.Core.Data.EntityFrameworkCore.Base
         {
             using (var tran = GetTransactionInternal())
             {
-                var list = tran.GetSet<TEntity>().ToList();
+                var list = tran.Set<TEntity>().ToList();
 
                 tran.CommitIfOwner();
 
@@ -110,7 +109,7 @@ namespace HoveyTech.Core.Data.EntityFrameworkCore.Base
         {
             using (var tran = GetTransactionInternal())
             {
-                var list = tran.GetSet<TEntity>().Where(predicate).ToList();
+                var list = tran.Set<TEntity>().Where(predicate).ToList();
 
                 tran.CommitIfOwner();
 
@@ -122,7 +121,7 @@ namespace HoveyTech.Core.Data.EntityFrameworkCore.Base
         {
             using (var tran = GetTransactionInternal())
             {
-                IQueryable<TEntity> list = tran.GetSet<TEntity>();
+                IQueryable<TEntity> list = tran.Set<TEntity>();
 
                 if (predicate != null)
                     list = list.Where(predicate);
@@ -141,7 +140,7 @@ namespace HoveyTech.Core.Data.EntityFrameworkCore.Base
         {
             using (var tran = GetTransactionInternal())
             {
-                tran.GetSet<TEntity>().Add(entity);
+                tran.Set<TEntity>().Add(entity);
 
                 tran.CommitIfOwner();
 
@@ -153,7 +152,7 @@ namespace HoveyTech.Core.Data.EntityFrameworkCore.Base
         {
             using (var tran = GetTransactionInternal())
             {
-                tran.GetSet<TEntity>().Update(entity);
+                tran.Set<TEntity>().Update(entity);
 
                 tran.CommitIfOwner();
 
@@ -165,7 +164,7 @@ namespace HoveyTech.Core.Data.EntityFrameworkCore.Base
         {
             using (var tran = GetTransactionInternal())
             {
-                tran.GetSet<TEntity>().Remove(entity);
+                tran.Set<TEntity>().Remove(entity);
 
                 tran.CommitIfOwner();
             }
@@ -175,7 +174,7 @@ namespace HoveyTech.Core.Data.EntityFrameworkCore.Base
         {
             using (var tran = GetTransactionInternal())
             {
-                tran.GetSet<TEntity>().UpdateRange(entities);
+                tran.Set<TEntity>().UpdateRange(entities);
 
                 tran.CommitIfOwner();
             }
@@ -185,7 +184,7 @@ namespace HoveyTech.Core.Data.EntityFrameworkCore.Base
         {
             using (var tran = GetTransactionInternal())
             {
-                tran.GetSet<TEntity>().AddRange(entities);
+                tran.Set<TEntity>().AddRange(entities);
 
                 tran.CommitIfOwner();
             }

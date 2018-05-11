@@ -11,36 +11,38 @@ using HoveyTech.Core.Data.Dapper.Contracts;
 
 namespace HoveyTech.Core.Data.Dapper.Repository
 {
-    public class DapperRepository<TEntity> : IDapperRepository<TEntity>
+    public abstract class DapperRepository<TEntity> : IDapperRepository<TEntity>
         where TEntity : class, IGetIdentifier
     {
-        private readonly IConnectionStringFactory _connectionStringFactory;
+        protected readonly IConnectionStringFactory ConnectionStringFactory;
 
-        public DapperRepository(IConnectionStringFactory connectionStringFactory)
+        protected DapperRepository(IConnectionStringFactory connectionStringFactory)
         {
-            _connectionStringFactory = connectionStringFactory;
+            ConnectionStringFactory = connectionStringFactory;
         }
         
-        private ISqlClientTransaction _currentTransaction;
-        public ISqlClientTransaction CurrentTransaction => _currentTransaction?.IsOpen ?? false ? _currentTransaction : null;
+        private IDapperTransaction _currentTransaction;
+        public IDapperTransaction CurrentTransaction => _currentTransaction?.IsOpen ?? false ? _currentTransaction : null;
 
-        public void JoinTransaction(ISqlClientTransaction sqlClientTransaction)
+        public abstract IDapperTransaction CreateTransaction(IsolationLevel level);
+
+        public void JoinTransaction(IDapperTransaction sqlClientTransaction)
         {
             _currentTransaction?.Dispose();
             _currentTransaction = sqlClientTransaction;
         }
 
-        public virtual ISqlClientTransaction GetTransaction()
+        public virtual IDapperTransaction GetTransaction()
         {
             return GetTransaction(IsolationLevel.ReadCommitted);
         }
 
-        public virtual ISqlClientTransaction GetTransaction(IsolationLevel level)
+        public virtual IDapperTransaction GetTransaction(IsolationLevel level)
         {
             if (CurrentTransaction != null)
                 return CurrentTransaction;
-
-            _currentTransaction = new SqlClientTransaction(_connectionStringFactory, level);
+            
+            _currentTransaction = CreateTransaction(level);
             return _currentTransaction;
         }
 

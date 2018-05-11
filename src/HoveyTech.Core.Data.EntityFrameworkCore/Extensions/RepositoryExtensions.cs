@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using HoveyTech.Core.Contracts.Data;
 using HoveyTech.Core.Contracts.Model;
-using HoveyTech.Core.Data.EntityFrameworkCore.Base;
+using HoveyTech.Core.Data.EntityFrameworkCore.Contracts;
 using HoveyTech.Core.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,12 +9,12 @@ namespace HoveyTech.Core.Data.EntityFrameworkCore.Extensions
 {
     public static class RepositoryExtensions
     {
-        public static bool DoesEntityExistById<TEntity>(this IHasTransactionRepository<TEntity> repository, object id)
+        public static bool DoesEntityExistById<TEntity>(this IPagingDbContextRepository<TEntity> repository, object id)
             where TEntity : class
         {
-            using (var tran = (Transaction)repository.GetTransaction())
+            using (var tran = repository.GetTransaction())
             {
-                var entity = tran.GetSet<TEntity>().Find(id);
+                var entity = tran.Set<TEntity>().Find(id);
                 var exists = entity != null;
 
                 if (exists)
@@ -31,12 +30,12 @@ namespace HoveyTech.Core.Data.EntityFrameworkCore.Extensions
             }
         }
         
-        public static IList<TEntity> GetAllActiveSorted<TEntity>(this IHasTransactionRepository<TEntity> repository, int? optionalId = null)
+        public static IList<TEntity> GetAllActiveSorted<TEntity>(this IPagingDbContextRepository<TEntity> repository, int? optionalId = null)
               where TEntity : BaseEntityWithIntKey, IIsActive, INamedEntity, new()
         {
-            using (var tran = (Transaction)repository.GetTransaction())
+            using (var tran = repository.GetTransaction())
             {
-                IQueryable<TEntity> query = tran.GetSet<TEntity>();
+                IQueryable<TEntity> query = tran.Set<TEntity>();
 
                 if (optionalId.HasValue)
                     query = query.Where(x => x.IsActive || x.Id == optionalId.Value);
@@ -53,12 +52,12 @@ namespace HoveyTech.Core.Data.EntityFrameworkCore.Extensions
             }
         }
 
-        public static IList<TEntity> GetAllActive<TEntity>(this IHasTransactionRepository<TEntity> repository)
+        public static IList<TEntity> GetAllActive<TEntity>(this IPagingDbContextRepository<TEntity> repository)
             where TEntity : class, IIsActive
         {
-            using (var tran = (Transaction)repository.GetTransaction())
+            using (var tran = repository.GetTransaction())
             {
-                IQueryable<TEntity> query = tran.GetSet<TEntity>()
+                IQueryable<TEntity> query = tran.Set<TEntity>()
                     .Where(x => x.IsActive);
 
                 var results = query.ToList();
@@ -69,12 +68,12 @@ namespace HoveyTech.Core.Data.EntityFrameworkCore.Extensions
             }
         }
 
-        public static IList<TEntity> GetAllActive<TEntity>(this IHasTransactionRepository<TEntity> repository, int? optionalId = null)
+        public static IList<TEntity> GetAllActive<TEntity>(this IPagingDbContextRepository<TEntity> repository, int? optionalId = null)
             where TEntity : BaseEntityWithIntKey, IIsActive, new()
         {
-            using (var tran = (Transaction)repository.GetTransaction())
+            using (var tran = repository.GetTransaction())
             {
-                IQueryable<TEntity> query = tran.GetSet<TEntity>();
+                IQueryable<TEntity> query = tran.Set<TEntity>();
 
                 if (optionalId.HasValue)
                     query = query.Where(x => x.IsActive || x.Id == optionalId.Value);
@@ -89,12 +88,12 @@ namespace HoveyTech.Core.Data.EntityFrameworkCore.Extensions
             }
         }
 
-        public static IList<TEntity> GetAllSorted<TEntity>(this IHasTransactionRepository<TEntity> repository)
+        public static IList<TEntity> GetAllSorted<TEntity>(this IPagingDbContextRepository<TEntity> repository)
             where TEntity : class, INamedEntity
         {
-            using (var tran = (Transaction)repository.GetTransaction())
+            using (var tran = repository.GetTransaction())
             {
-                var results = tran.GetSet<TEntity>()
+                var results = tran.Set<TEntity>()
                     .OrderBy(x => x.Name)
                     .ToList();
                 

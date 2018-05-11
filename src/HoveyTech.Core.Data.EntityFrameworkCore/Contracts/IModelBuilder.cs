@@ -3,7 +3,7 @@ using HoveyTech.Core.Contracts.Data;
 
 namespace HoveyTech.Core.Data.EntityFrameworkCore.Contracts
 {
-    public interface IModelBuilder : IHasTransaction
+    public interface IModelBuilder : IHasTransaction<IEntityFrameworkCoreTransaction>
     {
         Task Initialize();
     }

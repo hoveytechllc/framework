@@ -4,11 +4,13 @@ using HoveyTech.Core.Contracts.Data;
 using HoveyTech.Core.Data.EntityFrameworkCore.Base;
 using HoveyTech.Core.Data.EntityFrameworkCore.Contracts;
 using HoveyTech.Core.Data.EntityFrameworkCore.Extensions;
+using HoveyTech.Core.Services;
 
 namespace HoveyTech.Core.Data.EntityFrameworkCore.Services
 {
-    public abstract class BaseModelBuilder<TRepository, TEntity> : BaseDataService, IModelBuilder
-        where TRepository : IHasTransactionRepository<TEntity>
+    public abstract class BaseModelBuilder<TRepository, TEntity> 
+        : BaseDataService<IHasTransaction<IEntityFrameworkCoreTransaction>, IEntityFrameworkCoreTransaction>, IModelBuilder
+        where TRepository : IPagingDbContextRepository<TEntity>
         where TEntity : class
     {
         protected readonly TRepository Repository;
@@ -22,7 +24,7 @@ namespace HoveyTech.Core.Data.EntityFrameworkCore.Services
 
         public virtual async Task Initialize()
         {
-            using (var tran = (Transaction)GetTransaction())
+            using (var tran = GetTransaction())
             {
                 tran.TrySuppressPreprocessing();
 

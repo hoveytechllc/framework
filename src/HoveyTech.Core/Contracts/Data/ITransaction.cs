@@ -11,5 +11,7 @@ namespace HoveyTech.Core.Contracts.Data
         void Rollback();
 
         bool IsOwner { get; }
+
+        bool IsOpen { get; }
     }
 }
