@@ -8,14 +8,15 @@ using HoveyTech.Core.Model;
 
 namespace HoveyTech.Core.Caching.Services
 {
-    public class LookupCacheService<TEntity, TLookup> : ILookupCacheService<TEntity, TLookup>
+    public class LookupCacheService<TEntity, TLookup, TTransaction> : ILookupCacheService<TEntity, TLookup, TTransaction>
         where TLookup : struct, IConvertible
         where TEntity : BaseEntityWithIntKey, INamedEntity
+        where TTransaction : ITransaction
     {
-        private readonly IEntityCacheService<TEntity> _cacheService;
+        private readonly IEntityCacheService<TEntity, TTransaction> _cacheService;
         private IDictionary<TLookup, TEntity> _dictionary;
 
-        public LookupCacheService(IEntityCacheService<TEntity> cacheService)
+        public LookupCacheService(IEntityCacheService<TEntity, TTransaction> cacheService)
         {
             _cacheService = cacheService;
         }
@@ -73,12 +74,12 @@ namespace HoveyTech.Core.Caching.Services
             return GetEntityByLookup(lookup).Id;
         }
 
-        public ITransaction GetTransaction()
+        public TTransaction GetTransaction()
         {
             return _cacheService.GetTransaction();
         }
 
-        public void JoinTransaction(ITransaction tran)
+        public void JoinTransaction(TTransaction tran)
         {
             _cacheService.JoinTransaction(tran);
         }

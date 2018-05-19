@@ -32,7 +32,7 @@ namespace HoveyTech.Core.Tests.Extensions
         {
             var entity = new TestEntity(3);
             var tranMock = new Mock<ITransaction>();
-            var repositoryMock = new Mock<IHasTransactionRepository<TestEntity>>();
+            var repositoryMock = new Mock<IHasTransactionRepository<TestEntity, ITransaction>>();
             repositoryMock.Setup(x => x.GetTransaction()).Returns(() => tranMock.Object);
             repositoryMock.Object.AddOrUpdate(entity);
 

@@ -10,13 +10,14 @@ using HoveyTech.Core.Paging;
 
 namespace HoveyTech.Core.Caching.Services
 {
-    public class EntityCacheService<TEntity> : IEntityCacheService<TEntity>
+    public class EntityCacheService<TEntity, TTransaction> : IEntityCacheService<TEntity, TTransaction>
         where TEntity : class, IGetIdentifier
+        where TTransaction : ITransaction
     {
-        private readonly IPagingRepository<TEntity> _repository;
+        private readonly IHasTransactionRepository<TEntity, TTransaction> _repository;
         private readonly ICacheService<IList<TEntity>> _cacheService;
 
-        public EntityCacheService(IPagingRepository<TEntity> repository,
+        public EntityCacheService(IHasTransactionRepository<TEntity, TTransaction> repository,
             ICacheService<IList<TEntity>> cacheService)
         {
             _repository = repository;
@@ -28,28 +29,23 @@ namespace HoveyTech.Core.Caching.Services
             _cacheService.Clear();
         }
 
-        public ITransaction GetTransaction()
+        public TTransaction GetTransaction()
         {
             return _repository.GetTransaction();
         }
 
-        public void JoinTransaction(ITransaction tran)
+        public void JoinTransaction(TTransaction tran)
         {
             _repository.JoinTransaction(tran);
         }
 
-        public ITransaction CurrentTransaction => _repository.CurrentTransaction;
+        public TTransaction CurrentTransaction => _repository.CurrentTransaction;
 
         public IList<TEntity> GetAll()
         {
             return _cacheService.Get(_repository.GetAll);
         }
-
-        public void Clear()
-        {
-            _cacheService.Clear();
-        }
-
+        
         public TEntity GetById(object id)
         {
             return GetAll()
@@ -73,39 +69,6 @@ namespace HoveyTech.Core.Caching.Services
         public void Delete(TEntity entity)
         {
             _repository.Delete(entity);
-            _cacheService.Clear();
-        }
-
-        public IList<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
-        {
-            return GetAll()
-                .Where(predicate.Compile())
-                .ToList();
-        }
-
-        public IPagedList<TEntity> FindWithPaging<TKey>(IPagingRequest pagingRequest,
-            Expression<Func<TEntity, TKey>> orderBy,
-            Expression<Func<TEntity, bool>> predicate = null)
-        {
-            var items = GetAll();
-
-            if (predicate != null)
-                items = items.Where(predicate.Compile()).ToList();
-
-            return items.OrderBy(orderBy.Compile())
-                .AsQueryable()
-                .ToPagedList(pagingRequest);
-        }
-
-        public void UpdateRange(IEnumerable<TEntity> entities)
-        {
-            _repository.UpdateRange(entities);
-            _cacheService.Clear();
-        }
-
-        public void AddRange(IEnumerable<TEntity> entities)
-        {
-            _repository.AddRange(entities);
             _cacheService.Clear();
         }
     }

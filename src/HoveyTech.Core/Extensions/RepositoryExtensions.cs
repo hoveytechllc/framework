@@ -7,8 +7,9 @@ namespace HoveyTech.Core.Extensions
 {
     public static class RepositoryExtensions
     {
-        public static TEntity AddOrUpdate<TEntity>(this IHasTransactionRepository<TEntity> repository, TEntity entity)
+        public static TEntity AddOrUpdate<TEntity, TTransaction>(this IHasTransactionRepository<TEntity, TTransaction> repository, TEntity entity)
             where TEntity : class, IStateAware
+            where TTransaction : ITransaction
         {
             using (var tran = repository.GetTransaction())
             {
