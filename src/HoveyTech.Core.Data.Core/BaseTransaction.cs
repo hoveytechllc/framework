@@ -107,8 +107,8 @@ namespace HoveyTech.Core.Data
             if (InnerTransaction == null)
                 return;
 
-            InnerTransaction.Connection.Close();
-            InnerTransaction.Connection.Dispose();
+            InnerTransaction.Connection?.Close();
+            InnerTransaction.Connection?.Dispose();
             InnerTransaction.Dispose();
 
             InnerTransaction = default(TSystemDataTransaction);

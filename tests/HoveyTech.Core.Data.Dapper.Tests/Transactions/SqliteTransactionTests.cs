@@ -14,6 +14,18 @@ namespace HoveyTech.Core.Data.Dapper.Tests.Transactions
     public class SqliteTransactionTests
     {
         [Fact]
+        public void Dispose_does_not_throw_exception_if_connection_is_null()
+        {
+            var context = new TestableSqliteTransaction();
+            var sut = new SqliteTransaction(context.ConnectionStringFactory.Object, IsolationLevel.ReadCommitted);
+            
+            sut.Dispose();
+
+            Assert.False(sut.IsOpen);
+            Assert.True(sut.IsOwner);
+        }
+
+        [Fact]
         public void Connection_is_same_as_parent_when_child()
         {
             var context = new TestableSqliteTransaction();
