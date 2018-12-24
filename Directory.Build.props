@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <VersionPrefix>0.2.2</VersionPrefix>
+    <VersionPrefix>0.3.0</VersionPrefix>
     <Authors>David Hovey</Authors>
     <Company>Hovey Tech LLC</Company>
     <Product>Framework Libraries</Product>

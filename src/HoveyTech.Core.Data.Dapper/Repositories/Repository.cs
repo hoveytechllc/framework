@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
 using Dapper.Contrib.Extensions;
-using HoveyTech.Core.Contracts.Data;
 using HoveyTech.Core.Contracts.Model;
 using HoveyTech.Core.Data.Dapper.Contracts;
 
@@ -26,10 +23,12 @@ namespace HoveyTech.Core.Data.Dapper.Repository
 
         public abstract IDapperTransaction CreateTransaction(IsolationLevel level);
 
+        protected abstract IDapperTransaction JoinTransactionInternal(IDapperTransaction tran);
+
         public void JoinTransaction(IDapperTransaction sqlClientTransaction)
         {
             _currentTransaction?.Dispose();
-            _currentTransaction = sqlClientTransaction;
+            _currentTransaction =  sqlClientTransaction;
         }
 
         public virtual IDapperTransaction GetTransaction()
